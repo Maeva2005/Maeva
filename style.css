@@ -1,0 +1,1302 @@
+
+:root {
+    --black: #090807;
+    --black-soft: #11100e;
+    --black-card: #171411;
+    --black-light: #211b16;
+
+    --burgundy: #4b111d;
+    --burgundy-dark: #280810;
+    --burgundy-light: #702c38;
+
+    --gold: #c9a66b;
+    --gold-light: #ead7a6;
+    --gold-dark: #8d6938;
+
+    --ivory: #f1e9da;
+    --ivory-muted: #c6bba8;
+    --text-muted: #928779;
+
+    --border: rgba(201, 166, 107, 0.24);
+    --border-light: rgba(241, 233, 218, 0.11);
+
+    --serif: "Bodoni MT", "Didot", "Times New Roman", serif;
+    --sans: "Helvetica Neue", Arial, sans-serif;
+
+    --container: 1280px;
+
+    --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+    --transition: 450ms var(--ease-luxury);
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 50px;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(95, 43, 30, 0.18),
+            transparent 55%
+        ),
+        var(--black);
+
+    color: var(--ivory);
+
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.9;
+    letter-spacing: 0.035em;
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* Grain subtil pour une texture cinématographique */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    z-index: 9990;
+    pointer-events: none;
+
+    opacity: 0.055;
+
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+
+::selection {
+    color: var(--black);
+    background: var(--gold-light);
+}
+
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+a {
+    color: var(--gold-light);
+    text-decoration: none;
+
+    transition:
+        color var(--transition),
+        opacity var(--transition);
+}
+
+
+a:hover {
+    color: #fff1cf;
+}
+
+
+a:focus-visible {
+    outline: 1px solid var(--gold-light);
+    outline-offset: 5px;
+}
+
+
+p {
+    margin: 0 0 1.6em;
+}
+
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.2;
+    text-wrap: balance;
+}
+
+
+h1,
+h2,
+h3 {
+    color: var(--ivory);
+}
+
+
+ul,
+ol {
+    padding-left: 1.4em;
+}
+
+
+li {
+    padding-left: 0.35em;
+    margin-bottom: 0.6em;
+}
+
+
+strong {
+    color: var(--gold-light);
+    font-weight: 500;
+}
+
+
+abbr {
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold-dark);
+    cursor: help;
+}
+
+
+/* ==========================================================
+   02. RIDEAU DE VELOURS — INTRODUCTION CINÉMATOGRAPHIQUE
+   ========================================================== */
+
+/*
+   Le rideau reste au-dessus du site pendant son animation.
+   Il se lève ensuite pour révéler le contenu.
+
+   Animation purement CSS : aucun JavaScript nécessaire.
+*/
+
+.page-wrapper::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 10000;
+    pointer-events: none;
+
+    background:
+        /* Lumière centrale */
+        radial-gradient(
+            ellipse at 50% 40%,
+            rgba(153, 76, 68, 0.34),
+            transparent 48%
+        ),
+
+        /* Reflets du velours */
+        repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.45) 0%,
+            rgba(105, 35, 45, 0.24) 5%,
+            rgba(10, 4, 7, 0.58) 11%,
+            rgba(119, 43, 54, 0.18) 16%,
+            rgba(0, 0, 0, 0.45) 23%
+        ),
+
+        linear-gradient(
+            180deg,
+            #21070d 0%,
+            #4b111d 45%,
+            #23080e 100%
+        );
+
+    box-shadow:
+        inset 0 -35px 70px rgba(0, 0, 0, 0.7),
+        inset 0 0 100px rgba(0, 0, 0, 0.4);
+
+    transform: translateY(0);
+    transform-origin: top;
+
+    animation:
+        velvetCurtain 2.6s 0.65s var(--ease-luxury) forwards;
+}
+
+
+/* Bordure lumineuse au bas du rideau */
+
+.page-wrapper::after {
+    content: "";
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    z-index: 10001;
+    pointer-events: none;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold-dark),
+        var(--gold-light),
+        var(--gold-dark),
+        transparent
+    );
+
+    box-shadow: 0 0 30px rgba(201, 166, 107, 0.6);
+
+    animation:
+        curtainEdge 2.6s 0.65s var(--ease-luxury) forwards;
+}
+
+
+@keyframes velvetCurtain {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    65% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-105%);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+@keyframes curtainEdge {
+    0% {
+        top: 0;
+        opacity: 1;
+    }
+
+    100% {
+        top: -4px;
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+/* ==========================================================
+   03. STRUCTURE PRINCIPALE
+   ========================================================== */
+
+.page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+
+.intro,
+.main.supporting,
+.sidebar {
+    width: min(calc(100% - 100px), var(--container));
+    margin-inline: auto;
+}
+
+
+.intro {
+    position: relative;
+}
+
+
+/* ==========================================================
+   04. HERO — LE GRAND TITRE
+   ========================================================== */
+
+.intro header {
+    min-height: 670px;
+
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 100px 30px 120px;
+    margin-inline: calc((100% - min(100%, var(--container))) / -2);
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 43%,
+            rgba(105, 36, 44, 0.30),
+            transparent 50%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(201, 166, 107, 0.08),
+            transparent 40%
+        ),
+
+        linear-gradient(
+            180deg,
+            #0b0908 0%,
+            #130d0c 65%,
+            #0b0908 100%
+        );
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+/* Lumière dorée derrière le titre */
+
+.intro header::before {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    width: min(70vw, 800px);
+    aspect-ratio: 1;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: radial-gradient(
+        circle,
+        rgba(201, 166, 107, 0.09) 0%,
+        rgba(112, 44, 56, 0.08) 28%,
+        transparent 68%
+    );
+
+    pointer-events: none;
+}
+
+
+/* Cadre intérieur de l'affiche */
+
+.intro header::after {
+    content: "";
+
+    position: absolute;
+    inset: 28px;
+
+    border: 1px solid rgba(201, 166, 107, 0.18);
+
+    pointer-events: none;
+
+    transition:
+        inset 1s var(--ease-luxury),
+        border-color 1s ease;
+}
+
+
+.intro header:hover::after {
+    inset: 20px;
+    border-color: rgba(201, 166, 107, 0.4);
+}
+
+
+/* Petit surtitre */
+
+.intro header h2 {
+    order: 1;
+
+    margin: 0 0 26px;
+
+    color: var(--gold);
+
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+
+    animation: revealText 1s 2.6s both;
+}
+
+
+/* Titre principal */
+
+.intro header h1 {
+    order: 2;
+
+    position: relative;
+
+    margin: 0;
+
+    max-width: 1000px;
+
+    color: var(--ivory);
+
+    font-family: var(--serif);
+    font-size: clamp(64px, 11vw, 148px);
+    font-weight: 400;
+
+    line-height: 0.94;
+    letter-spacing: -0.065em;
+
+    text-wrap: balance;
+
+    text-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.3),
+        0 15px 60px rgba(0, 0, 0, 0.35);
+
+    animation: revealTitle 1.5s 2.75s both;
+}
+
+
+/* Soulignement précieux */
+
+.intro header h1::after {
+    content: "";
+
+    display: block;
+
+    width: 90px;
+    height: 1px;
+
+    margin: 35px auto 0;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold),
+        transparent
+    );
+
+    box-shadow: 0 0 18px rgba(201, 166, 107, 0.25);
+}
+
+
+/* Animations du titre */
+
+@keyframes revealTitle {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+
+@keyframes revealText {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+        letter-spacing: 0.8em;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 0.55em;
+    }
+}
+
+
+/* ==========================================================
+   05. INTRODUCTION & DESCRIPTION
+   ========================================================== */
+
+.summary {
+    position: relative;
+
+    max-width: 760px;
+
+    margin: -1px auto 0;
+    padding: 65px 30px 75px;
+
+    text-align: center;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+
+.summary p {
+    margin: 0 auto 18px;
+
+    color: var(--ivory-muted);
+
+    font-size: 14px;
+    line-height: 2.1;
+}
+
+
+.summary p:first-child {
+    color: var(--gold-light);
+
+    font-family: var(--serif);
+    font-size: clamp(21px, 2.4vw, 29px);
+
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+}
+
+
+.summary a {
+    display: inline-block;
+
+    padding-bottom: 3px;
+
+    color: var(--gold-light);
+
+    border-bottom: 1px solid var(--gold-dark);
+}
+
+
+.summary a:hover {
+    color: white;
+    border-color: white;
+}
+
+
+/* ==========================================================
+   06. PRÉAMBULE
+   ========================================================== */
+
+.preamble {
+    position: relative;
+
+    max-width: 850px;
+
+    margin: 0 auto;
+    padding: 110px 50px 120px;
+
+    text-align: center;
+}
+
+
+.preamble h3,
+.explanation h3,
+.participation h3,
+.benefits h3,
+.requirements h3 {
+    position: relative;
+
+    margin: 0 0 34px;
+
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+}
+
+
+.preamble h3::after,
+.explanation h3::after,
+.participation h3::after,
+.benefits h3::after,
+.requirements h3::after {
+    content: "";
+
+    display: block;
+
+    width: 44px;
+    height: 1px;
+
+    margin-top: 22px;
+
+    background: var(--gold);
+}
+
+
+.preamble h3::after {
+    margin-inline: auto;
+}
+
+
+.preamble p {
+    color: var(--ivory-muted);
+
+    font-size: 14px;
+    line-height: 2.15;
+}
+
+
+.preamble p:first-of-type {
+    color: var(--ivory);
+
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.85;
+}
+
+
+/* Lettrine élégante */
+
+.preamble p:first-of-type::first-letter {
+    float: left;
+
+    margin: 8px 12px 0 0;
+
+    color: var(--gold);
+
+    font-family: var(--serif);
+    font-size: 4em;
+    line-height: 0.75;
+}
+
+
+/* ==========================================================
+   07. CONTENU PRINCIPAL
+   ========================================================== */
+
+.main.supporting {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border: 1px solid var(--border);
+
+    margin-top: 0;
+    margin-bottom: 120px;
+}
+
+
+.main.supporting > div {
+    min-width: 0;
+
+    padding: 65px 48px;
+
+    background:
+        radial-gradient(
+            ellipse at 100% 0%,
+            rgba(201, 166, 107, 0.035),
+            transparent 45%
+        ),
+        var(--black-soft);
+
+    transition:
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.main.supporting > div:hover {
+    background:
+        radial-gradient(
+            ellipse at 100% 0%,
+            rgba(201, 166, 107, 0.09),
+            transparent 50%
+        ),
+        #15110e;
+
+    box-shadow: inset 0 0 70px rgba(201, 166, 107, 0.025);
+}
+
+
+.main.supporting p {
+    color: var(--ivory-muted);
+
+    font-size: 13px;
+    line-height: 2.15;
+}
+
+
+.main.supporting h3 {
+    font-size: clamp(29px, 3vw, 38px);
+}
+
+
+.main.supporting h3::after {
+    margin-top: 20px;
+}
+
+
+.main.supporting a {
+    position: relative;
+
+    color: var(--gold-light);
+
+    border-bottom: 1px solid rgba(201, 166, 107, 0.4);
+
+    transition:
+        color var(--transition),
+        border-color var(--transition);
+}
+
+
+.main.supporting a:hover {
+    color: white;
+    border-color: var(--gold-light);
+}
+
+
+/* ==========================================================
+   08. EXPLICATION
+   ========================================================== */
+
+.explanation {
+    position: relative;
+}
+
+
+.explanation::before {
+    content: "01";
+
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: var(--gold-dark);
+
+    font-family: var(--serif);
+    font-size: 12px;
+
+    letter-spacing: 0.3em;
+}
+
+
+/* ==========================================================
+   09. PARTICIPATION
+   ========================================================== */
+
+.participation {
+    position: relative;
+}
+
+
+.participation::before {
+    content: "02";
+
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: var(--gold-dark);
+
+    font-family: var(--serif);
+    font-size: 12px;
+
+    letter-spacing: 0.3em;
+}
+
+
+/* ==========================================================
+   10. AVANTAGES
+   ========================================================== */
+
+.benefits {
+    position: relative;
+}
+
+
+.benefits::before {
+    content: "03";
+
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: var(--gold-dark);
+
+    font-family: var(--serif);
+    font-size: 12px;
+
+    letter-spacing: 0.3em;
+}
+
+
+/* ==========================================================
+   11. EXIGENCES
+   ========================================================== */
+
+.requirements {
+    position: relative;
+}
+
+
+.requirements::before {
+    content: "04";
+
+    display: block;
+
+    margin-bottom: 25px;
+
+    color: var(--gold-dark);
+
+    font-family: var(--serif);
+    font-size: 12px;
+
+    letter-spacing: 0.3em;
+}
+
+
+/* ==========================================================
+   12. CITATIONS & ÉLÉMENTS TEXTUELS
+   ========================================================== */
+
+.main.supporting blockquote {
+    margin: 35px 0;
+    padding: 5px 0 5px 25px;
+
+    border-left: 1px solid var(--gold);
+
+    color: var(--ivory);
+
+    font-family: var(--serif);
+    font-size: 21px;
+    font-style: italic;
+    line-height: 1.7;
+}
+
+
+.main.supporting blockquote p {
+    color: var(--ivory);
+}
+
+
+.main.supporting li::marker {
+    color: var(--gold-dark);
+}
+
+
+.main.supporting abbr {
+    transition: color var(--transition);
+}
+
+
+.main.supporting abbr:hover {
+    color: white;
+}
+
+
+/* ==========================================================
+   13. PIED DE PAGE
+   ========================================================== */
+
+footer {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px 30px;
+
+    padding: 45px 25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #15100d,
+            #0b0908
+        );
+
+    border-top: 1px solid var(--border);
+}
+
+
+footer a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 46px;
+    min-height: 46px;
+
+    padding: 8px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 50px;
+
+    color: var(--ivory-muted);
+
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    transition:
+        color var(--transition),
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition);
+}
+
+
+footer a:hover {
+    color: var(--black);
+
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+
+    transform: translateY(-4px);
+}
+
+
+/* ==========================================================
+   14. BARRE LATÉRALE
+   ========================================================== */
+
+.sidebar {
+    position: relative;
+
+    margin-bottom: 100px;
+    padding: 65px 55px;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 0%,
+            rgba(112, 44, 56, 0.13),
+            transparent 65%
+        ),
+        #100d0b;
+
+    border: 1px solid var(--border);
+}
+
+
+.sidebar h3 {
+    margin: 0 0 25px;
+
+    color: var(--gold-light);
+
+    font-family: var(--serif);
+    font-size: 25px;
+    font-weight: 400;
+}
+
+
+.sidebar .wrapper {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 45px;
+}
+
+
+.sidebar .wrapper > div {
+    min-width: 0;
+}
+
+
+.sidebar ul {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.sidebar li {
+    margin: 0;
+    padding: 0;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+
+.sidebar li a {
+    display: block;
+
+    padding: 13px 0;
+
+    color: var(--ivory-muted);
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    transition:
+        color var(--transition),
+        padding-left var(--transition);
+}
+
+
+.sidebar li a:hover {
+    padding-left: 8px;
+
+    color: var(--gold-light);
+}
+
+
+.sidebar .design-selection li a:first-child {
+    color: var(--ivory);
+}
+
+
+.sidebar .design-selection li a:last-child {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+
+/* ==========================================================
+   15. INTERACTIONS & MICRO-ANIMATIONS
+   ========================================================== */
+
+/* Les liens gagnent progressivement en luminosité */
+
+a,
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Légère respiration de la lumière du hero */
+
+@keyframes ambientGlow {
+    0%,
+    100% {
+        opacity: 0.65;
+        transform: translate(-50%, -50%) scale(0.96);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.04);
+    }
+}
+
+
+.intro header::before {
+    animation: ambientGlow 9s ease-in-out infinite;
+}
+
+
+/* Apparition des sections après le rideau */
+
+.summary,
+.preamble,
+.main.supporting,
+.sidebar {
+    animation: contentReveal 1.1s 2.1s both;
+}
+
+
+@keyframes contentReveal {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================================
+   16. RESPONSIVE — TABLETTES
+   ========================================================== */
+
+@media (max-width: 1000px) {
+
+    .intro,
+    .main.supporting,
+    .sidebar {
+        width: min(calc(100% - 56px), var(--container));
+    }
+
+
+    .intro header {
+        min-height: 570px;
+    }
+
+
+    .main.supporting {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 80px;
+    }
+
+
+    .main.supporting > div {
+        padding: 45px 30px;
+    }
+
+
+    .sidebar {
+        padding: 45px 35px;
+    }
+
+
+    .sidebar .wrapper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 35px;
+    }
+}
+
+
+/* ==========================================================
+   17. RESPONSIVE — MOBILES
+   ========================================================== */
+
+@media (max-width: 650px) {
+
+    body {
+        font-size: 13px;
+        line-height: 1.85;
+    }
+
+
+    .intro,
+    .main.supporting,
+    .sidebar {
+        width: calc(100% - 32px);
+    }
+
+
+    .intro header {
+        min-height: 490px;
+
+        padding: 85px 24px;
+
+        margin-inline: -16px;
+    }
+
+
+    .intro header::after {
+        inset: 12px;
+    }
+
+
+    .intro header:hover::after {
+        inset: 9px;
+    }
+
+
+    .intro header h2 {
+        margin-bottom: 24px;
+
+        font-size: 8px;
+        letter-spacing: 0.35em;
+    }
+
+
+    .intro header h1 {
+        font-size: clamp(51px, 13vw, 82px);
+        letter-spacing: -0.06em;
+    }
+
+
+    .intro header h1::after {
+        margin-top: 25px;
+    }
+
+
+    .summary {
+        padding: 48px 10px 55px;
+    }
+
+
+    .summary p:first-child {
+        font-size: 22px;
+    }
+
+
+    .preamble {
+        padding: 75px 10px 80px;
+    }
+
+
+    .preamble h3,
+    .main.supporting h3 {
+        font-size: 32px;
+    }
+
+
+    .preamble p:first-of-type {
+        font-size: 18px;
+    }
+
+
+    .main.supporting {
+        grid-template-columns: minmax(0, 1fr);
+
+        margin-bottom: 60px;
+    }
+
+
+    .main.supporting > div {
+        padding: 42px 25px;
+    }
+
+
+    .sidebar {
+        padding: 35px 23px;
+        margin-bottom: 55px;
+    }
+
+
+    .sidebar .wrapper {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 35px;
+    }
+
+
+    footer {
+        gap: 12px;
+        padding: 35px 15px;
+    }
+
+
+    footer a {
+        min-width: 42px;
+        min-height: 42px;
+
+        padding: 7px 10px;
+        font-size: 9px;
+    }
+}
+
+
+/* ==========================================================
+   18. ACCESSIBILITÉ — ANIMATIONS RÉDUITES
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+
+    .page-wrapper::before,
+    .page-wrapper::after {
+        display: none;
+    }
+
+
+    .summary,
+    .preamble,
+    .main.supporting,
+    .sidebar,
+    .intro header h1,
+    .intro header h2 {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+}
+
